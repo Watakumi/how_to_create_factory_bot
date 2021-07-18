@@ -18,14 +18,14 @@ services:
             NODE_ENV: development
         depends_on:
             - db
-    webpack:
-        <<: *app_base
-        command: 'yarn watch'
-        ports:
-            - '8080:8080'
-        depends_on:
-            - web
-        tty: false
-        stdin_open: false
-        environment:
-            NODE_ENV: development
+    # webpack:
+    #     <<: *app_base
+    #     command: 'yarn watch'
+    #     ports:
+    #         - '8080:8080'
+    #     depends_on:
+    #         - web
+    #     tty: false
+    #     stdin_open: false
+    #     environment:
+    #         NODE_ENV: development
