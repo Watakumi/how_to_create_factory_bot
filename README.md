@@ -1,24 +1,27 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+### Overview
+Learn How to Create MyFactorybot
 
-Things you may want to cover:
+### Environment
+Ruby: 2.7.4
+Rails: 6.1.4
+PostgreSQL: 13.3
 
-* Ruby version
+### Set Up
 
-* System dependencies
 
-* Configuration
+```
+$ docker compose build
+```
 
-* Database creation
+```
+$ docker compose up -d
+```
 
-* Database initialization
+```
+$ docker compose exec web bundle exec rails runner my_factory_bot.rb
+```
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+### References
+https://www.codewithjason.com/understanding-factory-bot-syntax-coding-factory-bot/
