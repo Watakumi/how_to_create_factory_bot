@@ -4,28 +4,25 @@ class MyFactoryBot
   end
 
   def self.factory(model_sym, &block)
-    @factory = MyFactory.new
-    @factory.instance_exec(&block)
+    @factories ||= {}
+    @factories[model_sym] = MyFactory.new(model_sym)
+    @factories[model_sym].instance_exec(&block)
   end
 
   def self.create(model_sym)
-    @factory.user
+    @factories[model_sym].record
   end
 end
 
 class MyFactory
-  attr_reader :user
+  attr_reader :record
 
-  def initialize
-    @user = User.new
+  def initialize(model_sym)
+    @record = model_sym.to_s.classify.constantize.new
   end
 
-  def first_name(&block)
-    @user.first_name = block.call
-  end
-
-  def last_name(&block)
-    @user.last_name = block.call
+  def method_missing(attr, *args, &block)
+    @record.send("#{attr}=", block.call)
   end
 end
 
@@ -36,7 +33,19 @@ MyFactoryBot.define do
   end
 end
 
+MyFactoryBot.define do
+  factory :website do
+    name { "Google" }
+    url { "www.google.com" }
+  end
+end
+
 user = MyFactoryBot.create(:user)
 puts user.class.name
 puts "First name: #{user.first_name}"
 puts "Last name: #{user.last_name}"
+
+website = MyFactoryBot.create(:website)
+puts website.class.name
+puts "Name: #{website.name}"
+puts "URL: #{website.url}"
